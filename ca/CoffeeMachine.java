@@ -13,39 +13,60 @@ import java.util.Scanner;
 
 public class CoffeeMachine {
     private static Scanner scanner = new Scanner(System.in);
+    private static Coffee[] coffees = {
+        new Coffee("아메리카노", "에스프레소 + 물"),
+        new Coffee("카페라떼", "에스프레소 + 우유"),
+        new Coffee("카푸치노", "에스프레소 + 우유거품")
+    };
+
+    private static class Coffee {
+        private String name;
+        private String guide;
+
+        public Coffee(String name, String guide) {
+            this.name = name;
+            this.guide = guide;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public String getGuide() {
+            return this.guide;
+        }
+    }
+
+    private static void showMenu() {
+        for(int i=0; i<coffees.length; i++) {
+            System.out.printf("%d. %s\n", i+1, coffees[i].getName());
+        }
+        System.out.printf("%d. 종료\n", coffees.length + 1);
+    }
 
     public static void main(String[] args) {
         boolean isRun = true;
+        int choiceMenu = -1;
 
         while (isRun) {
             // Show Menu
-            System.out.println("1. 아메리카노");
-            System.out.println("2. 카페라떼");
-            System.out.println("3. 카푸치노");
-            System.out.println("4. 종료");
+            showMenu();
 
             // Choice Menu
             System.out.print("메뉴 선택 : ");
+            choiceMenu = scanner.nextInt();
 
-            switch (scanner.nextInt()) {
-                case 1:
-                    System.out.println("아메리카노 : 에스프레소 + 물");
-                    break;
-                case 2:
-                    System.out.println("카페라떼 : 에스프레소 + 우유");
-                    break;
-                case 3:
-                    System.out.println("카푸치노 : 에스프레소 + 우유거품");
-                    break;
-                case 4:
-                    isRun = false;
-                    break;
-                default:
-                    System.out.println("[Error] 잘못된 메뉴를 선택하였습니다. 다시 선택해주세요");
-                    break;
+            if(choiceMenu > 0 && choiceMenu <= coffees.length) {
+                Coffee coffee = coffees[choiceMenu - 1];
+                System.out.printf("%s : %s\n", coffee.getName(), coffee.getGuide());
+            } else if(choiceMenu == (coffees.length + 1)) {
+                isRun = false;
+            } else {
+                System.out.println("[Error] 잘못된 메뉴를 선택하였습니다. 다시 선택해주세요");
             }
 
             System.out.println();
         }
     }
 }
+
