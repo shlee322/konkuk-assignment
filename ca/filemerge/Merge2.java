@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -25,8 +26,12 @@ public class Merge2 {
 
         try {
             merge(args[0], input_paths);
+        } catch (FileNotFoundException e) {
+            System.err.println("Not Found");
+            e.printStackTrace();
         } catch (IOException e) {
-            System.err.println("Error in merge()\n" + e.getMessage());
+            System.err.println("Error in merge()");
+            e.printStackTrace();
         }
     }
 

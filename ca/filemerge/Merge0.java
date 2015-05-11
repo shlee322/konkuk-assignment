@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @link https://github.com/shlee322/konkuk-assignment/tree/master/ca/filemerge/
  *
  */
-public class Merge1 {
+public class Merge0 {
     public static void main(String[] args) {
         if(args.length < 3) {
             System.err.println("Usage: output_path input1_path input2_path [input_path]...");
@@ -30,30 +30,19 @@ public class Merge1 {
         PrintWriter output = null;
         Scanner[] inputs = new Scanner[input_paths.length];
 
-        try {
-            output = new PrintWriter(new File(output_path));
+        output = new PrintWriter(new File(output_path));
+        for(int i=0; i<input_paths.length; i++) {
+            inputs[i] = new Scanner(new File(input_paths[i]));
+        }
+
+        int writeOp = 1;
+        while (writeOp > 0) {
+            writeOp = 0;
             for(int i=0; i<input_paths.length; i++) {
-                inputs[i] = new Scanner(new File(input_paths[i]));
-            }
+                if(!inputs[i].hasNext()) continue;
 
-            int writeOp = 1;
-            while (writeOp > 0) {
-                writeOp = 0;
-                for(int i=0; i<input_paths.length; i++) {
-                    if(!inputs[i].hasNext()) continue;
-
-                    output.println(inputs[i].next());
-                    writeOp++;
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println("Error in merge()");
-            e.printStackTrace();
-        } finally {
-            if(output != null) output.close();
-            for(int i=0; i<input_paths.length; i++) {
-                if(inputs[i] != null) inputs[i].close();
+                output.println(inputs[i].next());
+                writeOp++;
             }
         }
     }
